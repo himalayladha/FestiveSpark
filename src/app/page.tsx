@@ -15,6 +15,8 @@ interface FormValues {
   brand: string;
   insight: string;
   festival: string;
+  targetAudience: string;
+  toneOfVoice: string;
 }
 
 export default function Home() {
@@ -33,6 +35,8 @@ export default function Home() {
         festival: values.festival,
         brand: values.brand,
         insight: values.insight,
+        targetAudience: values.targetAudience,
+        toneOfVoice: values.toneOfVoice,
       });
       setResult(contentIdea);
     } catch (error) {

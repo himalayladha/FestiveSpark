@@ -15,6 +15,8 @@ const GenerateContentIdeasInputSchema = z.object({
   festival: z.string().describe('The festival or special day.'),
   brand: z.string().describe('The brand name.'),
   insight: z.string().describe('The insight about the target audience.'),
+  targetAudience: z.string().describe('The target audience for the content.'),
+  toneOfVoice: z.string().describe('The desired tone of voice for the content.'),
 });
 export type GenerateContentIdeasInput = z.infer<typeof GenerateContentIdeasInputSchema>;
 
@@ -37,11 +39,13 @@ const prompt = ai.definePrompt({
   name: 'generateContentIdeasPrompt',
   input: {schema: GenerateContentIdeasInputSchema},
   output: {schema: GenerateContentIdeasOutputSchema},
-  prompt: `You are a creative marketing expert. Generate a branded content idea based on the provided festival, brand, and insight.
+  prompt: `You are a creative marketing expert. Generate a branded content idea based on the provided festival, brand, insight, target audience, and tone of voice.
 
   Festival: {{{festival}}}
   Brand: {{{brand}}}
   Insight: {{{insight}}}
+  Target Audience: {{{targetAudience}}}
+  Tone of Voice: {{{toneOfVoice}}}
 
   The content idea should connect a festival emotion or ritual to a brand tension or benefit using one of these three techniques: Contrast, Harmony, or Subversion.
 

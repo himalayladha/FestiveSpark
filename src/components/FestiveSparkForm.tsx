@@ -17,11 +17,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   brand: z.string().min(2, "Brand name must be at least 2 characters.").max(50),
   insight: z.string().min(10, "Brief must be at least 10 characters.").max(200, "Brief cannot exceed 200 characters."),
   festival: z.string().min(3, "Festival name must be at least 3 characters.").max(50),
+  targetAudience: z.string().min(10, "Target audience must be at least 10 characters.").max(100),
+  toneOfVoice: z.string({ required_error: "Please select a tone of voice."}),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -38,6 +47,7 @@ export function FestiveSparkForm({ onSubmit, isLoading }: FestiveSparkFormProps)
       brand: "",
       insight: "",
       festival: "",
+      targetAudience: "",
     },
   });
 
@@ -89,6 +99,52 @@ export function FestiveSparkForm({ onSubmit, isLoading }: FestiveSparkFormProps)
               </FormControl>
               <FormDescription>
                 The cultural event to focus on.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="targetAudience"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-headline">Target Audience</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="e.g., Young professionals, 25-35, who value tradition but are short on time."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>Who is this content for?</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="toneOfVoice"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-headline">Tone of Voice</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a tone" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Humorous">Humorous & Witty</SelectItem>
+                  <SelectItem value="Inspirational">Inspirational & Uplifting</SelectItem>
+                  <SelectItem value="Nostalgic">Nostalgic & Heartfelt</SelectItem>
+                  <SelectItem value="Modern">Modern & Edgy</SelectItem>
+                  <SelectItem value="Formal">Formal & Elegant</SelectItem>
+                  <SelectItem value="Playful">Playful & Fun</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                The desired style of the content.
               </FormDescription>
               <FormMessage />
             </FormItem>
